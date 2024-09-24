@@ -1,11 +1,10 @@
 import { Injectable } from '@nestjs/common';
+import * as chromeLauncher from 'chrome-launcher';
+import lighthouse from 'lighthouse';
 
 @Injectable()
 export class AuditsService {
   async auditUrl(url: string): Promise<any> {
-    // Importación dinámica de chrome-launcher
-    const chromeLauncher = (await import('chrome-launcher')).default;
-
     const chrome = await chromeLauncher.launch({ chromeFlags: ['--headless'] });
 
     const options = {
@@ -15,11 +14,7 @@ export class AuditsService {
       port: chrome.port,
     };
 
-    // Importación dinámica de lighthouse
-    const lighthouse = (await import('lighthouse')).default;
-
     const runnerResult = await lighthouse(url, options);
-
     const report = runnerResult.lhr;
 
     await chrome.kill();
