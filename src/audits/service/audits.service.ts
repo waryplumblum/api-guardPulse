@@ -1,12 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import * as chromeLauncher from 'chrome-launcher';
 import lighthouse from 'lighthouse';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Audit } from '../schemas/audit.schema.js';
 import { ReportsService } from '../../reports/service/reports.service.js';
 
 @Injectable()
 export class AuditsService {
-
-  constructor(private readonly reportsService: ReportsService) {}
+  constructor(
+    @InjectModel(Audit.name) private auditModel: Model<Audit>, 
+    private readonly reportsService: ReportsService
+  ) {}
 
   async auditUrl(url: string): Promise<any> {
     const chrome = await chromeLauncher.launch({ chromeFlags: ['--headless'] });
@@ -30,13 +35,29 @@ export class AuditsService {
       reportDetails: report.audits,
     };
 
-    // Guardar el reporte en la base de datos
-    const newReport = await this.reportsService.createReport(url, auditResult.reportDetails);
+    // **Guardar la auditoría en la base de datos**
+    const newAudit = new this.auditModel({
+      url,
+      seoScore: auditResult.seo,
+      performanceScore: auditResult.performance,
+      accessibilityScore: auditResult.accessibility,
+    });
 
-    // Retorna el resultado junto con el ID del nuevo reporte
+    const savedAudit = await newAudit.save();
+
+    // **Crear el reporte en la base de datos, pasando el ID de la auditoría como string**
+    const newReport = await this.reportsService.createReport(
+      savedAudit._id.toString(),  // Castear el ID a string
+      auditResult.reportDetails
+    );
+
+    // **Actualizar la auditoría con el ID del reporte**
+    savedAudit.reportId = newReport._id.toString(); // Castear el ID a string
+    await savedAudit.save();
+
     return {
       auditResult,
-      reportId: newReport._id, // Devuelve el ID del nuevo reporte
+      reportId: newReport._id.toString(), // Asegurarse de que el ID sea string
     };
   }
 }
