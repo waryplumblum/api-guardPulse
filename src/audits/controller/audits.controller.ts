@@ -7,7 +7,12 @@ export class AuditsController {
 
   @Post()
   async auditUrl(@Body('url') url: string) {
-    const auditResult = await this.auditsService.auditUrl(url);
-    return auditResult;
+    try {
+      const auditResult = await this.auditsService.auditUrl(url);
+      return auditResult;
+    } catch (error) {
+      // Manejo de errores
+      return { error: 'Error auditing URL', details: error.message };
+    }
   }
 }

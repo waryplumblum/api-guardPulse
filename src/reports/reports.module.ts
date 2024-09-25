@@ -8,5 +8,6 @@ import { Report, ReportSchema } from './schemas/report.schema.js';
   imports: [MongooseModule.forFeature([{ name: Report.name, schema: ReportSchema }])],
   controllers: [ReportsController],
   providers: [ReportsService],
+  exports: [ReportsService],  
 })
 export class ReportsModule {}
