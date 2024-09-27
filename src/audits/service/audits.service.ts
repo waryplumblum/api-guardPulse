@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import * as chromeLauncher from 'chrome-launcher';
+import * as puppeteer from 'puppeteer';
 import lighthouse from 'lighthouse';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -14,19 +14,25 @@ export class AuditsService {
   ) {}
 
   async auditUrl(url: string): Promise<any> {
-    const chrome = await chromeLauncher.launch({ chromeFlags: ['--headless'] });
+    // Lanzar Puppeteer en modo headless
+    const browser = await puppeteer.launch({
+      headless: true, // Ejecuta Chrome sin interfaz gráfica
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    });
+
+    const { port } = new URL(browser.wsEndpoint());
 
     const options = {
       logLevel: 'info' as const,
       output: 'json' as const,
       onlyCategories: ['performance', 'accessibility', 'seo'],
-      port: chrome.port,
+      port: Number(port),
     };
 
     const runnerResult = await lighthouse(url, options);
     const report = runnerResult.lhr;
 
-    await chrome.kill();
+    await browser.close(); // Cierra el navegador Puppeteer
 
     const auditResult = {
       performance: report.categories.performance.score * 100,
@@ -47,12 +53,12 @@ export class AuditsService {
 
     // **Crear el reporte en la base de datos, pasando el ID de la auditoría como string**
     const newReport = await this.reportsService.createReport(
-      savedAudit._id.toString(),  // Castear el ID a string
+      savedAudit._id.toString(),
       auditResult.reportDetails
     );
 
     // **Actualizar la auditoría con el ID del reporte**
-    savedAudit.reportId = newReport._id.toString(); // Castear el ID a string
+    savedAudit.reportId = newReport._id.toString();
     await savedAudit.save();
 
     return {
