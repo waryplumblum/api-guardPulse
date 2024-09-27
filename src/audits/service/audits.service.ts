@@ -66,4 +66,10 @@ export class AuditsService {
       reportId: newReport._id.toString(), // Asegurarse de que el ID sea string
     };
   }
+
+  // Nuevo método para obtener todas las auditorías
+  async getAllAudits(): Promise<Audit[]> {
+    return await this.auditModel.find().exec(); // Devuelve todas las auditorías
+  }
+
 }
