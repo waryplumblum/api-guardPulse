@@ -16,7 +16,7 @@ export class AuditsService {
   async auditUrl(url: string): Promise<any> {
     // Lanzar Puppeteer en modo headless
     const browser = await puppeteer.launch({
-      headless: true, // Ejecuta Chrome sin interfaz gráfica
+      headless: 'shell', // Ejecuta Chrome sin interfaz gráfica
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
 
