@@ -1,4 +1,179 @@
+export interface ReportDetails {
+    generalSettings :{
+        Viewport: {
+            viewport:                           Viewport; // Información sobre el viewport
+        }
+    };
+    performance : {
+        Accesskeys: {
+            "largest-contentful-paint":         Accesskeys; // Métrica de rendimiento
+            "first-meaningful-paint":           Accesskeys; // Métrica de rendimiento
+            "speed-index":                      Accesskeys; // Métrica de rendimiento
+            "screenshot-thumbnails":            Accesskeys; // Métrica de rendimiento
+            "final-screenshot":                 Accesskeys; // Métrica de rendimiento
+            "max-potential-fid":                Accesskeys; // Métrica de rendimiento
+            interactive:                        Accesskeys; // Métrica de rendimiento
+            "user-timings":                     Accesskeys; // Métrica de rendimiento
+            "critical-request-chains":          Accesskeys; // Métrica de rendimiento
+            "network-requests":                 Accesskeys; // Métrica de rendimiento
+            "network-rtt":                      Accesskeys; // Métrica de rendimiento
+            "main-thread-tasks":                Accesskeys; // Métrica de rendimiento
+            "lcp-lazy-loaded":                  Accesskeys; // Métrica de rendimiento
+            "non-composited-animations":        Accesskeys; // Métrica de rendimiento
+            "prioritize-lcp-image":             Accesskeys; // Métrica de rendimiento
+            "bf-cache":                         Accesskeys; // Accesibilidad
+            "script-treemap-data":              Accesskeys; // Accesibilidad
+        };
+        CumulativeLayoutShift : {
+            "first-contentful-paint":           CumulativeLayoutShift; // Métrica de rendimiento
+            "total-blocking-time":              CumulativeLayoutShift; // Métrica de rendimiento
+            "cumulative-layout-shift":          CumulativeLayoutShift; // Métrica de rendimiento
+            "network-server-latency":           CumulativeLayoutShift; // Métrica de rendimiento
+            "total-byte-weight":                CumulativeLayoutShift; // Métrica de rendimiento
+            metrics:                            CumulativeLayoutShift; // Métrica de rendimiento
+        };
+        BootupTime : {
+            "bootup-time":                      BootupTime; // Métrica de rendimiento
+        };
+        UsesRelPreconnect : {
+            "uses-rel-preconnect":              UsesRelPreconnect; // Mejora de rendimiento
+        };
+        LongTasks : {
+            "long-tasks":                       LongTasks; // Métrica de rendimiento
+        };
+        LargestContentfulPaintElement:{
+            "largest-contentful-paint-element": LargestContentfulPaintElement; // Métrica de rendimiento
+        };
+        DuplicatedJavascript:{
+            "offscreen-images":                 DuplicatedJavascript; // Información de duplicación de JavaScript
+            "unminified-css":                   DuplicatedJavascript; // Información de duplicación de JavaScript
+            "unminified-javascript":            DuplicatedJavascript; // Información de duplicación de JavaScript
+            "unused-css-rules":                 DuplicatedJavascript; // Información de duplicación de JavaScript
+            "unused-javascript":                DuplicatedJavascript; // Información de duplicación de JavaScript
+            "modern-image-formats":             DuplicatedJavascript; // Información de duplicación de JavaScript
+            "uses-optimized-images":            DuplicatedJavascript; // Información de duplicación de JavaScript
+            "uses-text-compression":            DuplicatedJavascript; // Información de duplicación de JavaScript
+            "uses-responsive-images":           DuplicatedJavascript; // Información de duplicación de JavaScript
+            "efficient-animated-content":       DuplicatedJavascript; // Información de duplicación de JavaScript
+            "duplicated-javascript":            DuplicatedJavascript; // Información de duplicación de JavaScript
+            "legacy-javascript":                DuplicatedJavascript; // Información de duplicación de JavaScript
+        };
+        Redirects:{
+            "server-response-time":             Redirects; // Información sobre redirecciones
+            redirects:                          Redirects; // Información sobre redirecciones
+            "render-blocking-resources":        Redirects; // Información sobre redirecciones
+            "uses-http2":                       Redirects; // Información sobre redirecciones
+        };
+        DOMSize : {
+            "mainthread-work-breakdown":        DOMSize; // Información sobre el tamaño del DOM
+            "uses-long-cache-ttl":              DOMSize; // Información sobre el tamaño del DOM
+            "dom-size":                         DOMSize; // Información sobre el tamaño del DOM
+        };
+    };
+    accessibility : {
+        Accesskeys : {
+            "font-display":                     Accesskeys; // Accesibilidad
+            diagnostics:                        Accesskeys; // Accesibilidad
+            "layout-shifts":                    Accesskeys; // Accesibilidad
+            "unsized-images":                   Accesskeys; // Accesibilidad
+            accesskeys:                         Accesskeys; // Accesibilidad
+            "button-name":                      Accesskeys; // Accesibilidad
+            bypass:                             Accesskeys; // Accesibilidad
+            "color-contrast":                   Accesskeys; // Accesibilidad
+            "definition-list":                  Accesskeys; // Accesibilidad
+            dlitem:                             Accesskeys; // Accesibilidad
+            "document-title":                   Accesskeys; // Accesibilidad
+            "duplicate-id-aria":                Accesskeys; // Accesibilidad
+            "empty-heading":                    Accesskeys; // Accesibilidad
+            "form-field-multiple-labels":       Accesskeys; // Accesibilidad
+            "frame-title":                      Accesskeys; // Accesibilidad
+            "heading-order":                    Accesskeys; // Accesibilidad
+            "html-has-lang":                    Accesskeys; // Accesibilidad
+            "html-lang-valid":                  Accesskeys; // Accesibilidad
+            "html-xml-lang-mismatch":           Accesskeys; // Accesibilidad
+            "identical-links-same-purpose":     Accesskeys; // Accesibilidad
+            "image-alt":                        Accesskeys; // Accesibilidad
+            "image-redundant-alt":              Accesskeys; // Accesibilidad
+            "input-button-name":                Accesskeys; // Accesibilidad
+            "input-image-alt":                  Accesskeys; // Accesibilidad
+            "label-content-name-mismatch":      Accesskeys; // Accesibilidad
+            label:                              Accesskeys; // Accesibilidad
+            "landmark-one-main":                Accesskeys; // Accesibilidad
+            "link-name":                        Accesskeys; // Accesibilidad
+            "link-in-text-block":               Accesskeys; // Accesibilidad
+            list:                               Accesskeys; // Accesibilidad
+            listitem:                           Accesskeys; // Accesibilidad
+            "meta-refresh":                     Accesskeys; // Accesibilidad
+            "meta-viewport":                    Accesskeys; // Accesibilidad
+            "object-alt":                       Accesskeys; // Accesibilidad
+            "select-name":                      Accesskeys; // Accesibilidad
+            "skip-link":                        Accesskeys; // Accesibilidad
+            tabindex:                           Accesskeys; // Accesibilidad
+            "table-duplicate-name":             Accesskeys; // Accesibilidad
+            "table-fake-caption":               Accesskeys; // Accesibilidad
+            "target-size":                      Accesskeys; // Accesibilidad
+            "td-has-header":                    Accesskeys; // Accesibilidad
+            "td-headers-attr":                  Accesskeys; // Accesibilidad
+            "th-has-data-cells":                Accesskeys; // Accesibilidad
+            "valid-lang":                       Accesskeys; // Accesibilidad
+            "video-caption":                    Accesskeys; // Accesibilidad
+            "custom-controls-labels":           Accesskeys; // Accesibilidad
+            "custom-controls-roles":            Accesskeys; // Accesibilidad
+            "focus-traps":                      Accesskeys; // Accesibilidad
+            "focusable-controls":               Accesskeys; // Accesibilidad
+            "interactive-element-affordance":   Accesskeys; // Accesibilidad
+            "logical-tab-order":                Accesskeys; // Accesibilidad
+            "managed-focus":                    Accesskeys; // Accesibilidad
+            "offscreen-content-hidden":         Accesskeys; // Accesibilidad
+            "use-landmarks":                    Accesskeys; // Accesibilidad
+            "visual-order-follows-dom":         Accesskeys; // Accesibilidad
+            "no-document-write":                Accesskeys; // Accesibilidad
+            "uses-passive-event-listeners":     Accesskeys; // Accesibilidad
+            "link-text":                        Accesskeys; // Accesibilidad
+        };
+        ARIA :{
+            "aria-allowed-attr":                Accesskeys; // Accesibilidad
+            "aria-allowed-role":                Accesskeys; // Accesibilidad
+            "aria-command-name":                Accesskeys; // Accesibilidad
+            "aria-conditional-attr":            Accesskeys; // Accesibilidad
+            "aria-deprecated-role":             Accesskeys; // Accesibilidad
+            "aria-dialog-name":                 Accesskeys; // Accesibilidad
+            "aria-hidden-body":                 Accesskeys; // Accesibilidad
+            "aria-hidden-focus":                Accesskeys; // Accesibilidad
+            "aria-input-field-name":            Accesskeys; // Accesibilidad
+            "aria-meter-name":                  Accesskeys; // Accesibilidad
+            "aria-progressbar-name":            Accesskeys; // Accesibilidad
+            "aria-prohibited-attr":             Accesskeys; // Accesibilidad
+            "aria-required-attr":               Accesskeys; // Accesibilidad
+            "aria-required-children":           Accesskeys; // Accesibilidad
+            "aria-required-parent":             Accesskeys; // Accesibilidad
+            "aria-roles":                       Accesskeys; // Accesibilidad
+            "aria-text":                        Accesskeys; // Accesibilidad
+            "aria-toggle-field-name":           Accesskeys; // Accesibilidad
+            "aria-tooltip-name":                Accesskeys; // Accesibilidad
+            "aria-treeitem-name":               Accesskeys; // Accesibilidad
+            "aria-valid-attr-value":            Accesskeys; // Accesibilidad
+            "aria-valid-attr":                  Accesskeys; // Accesibilidad
+        };
+    };
+    seo : {
+        Accesskeys : {
+            "meta-description":                 Accesskeys; // Accesibilidad
+            "http-status-code":                 Accesskeys; // Accesibilidad
+            canonical:                          Accesskeys; // Accesibilidad
+            "robots-txt":                       Accesskeys; // Accesibilidad
+            hreflang:                           Accesskeys; // Accesibilidad
+            "is-crawlable":                     Accesskeys; // Accesibilidad
+            "crawlable-anchors":                Accesskeys; // Accesibilidad
+            "structured-data":                  Accesskeys; // Accesibilidad
+            "resource-summary":                 Accesskeys; // Resumen de recursos
+            "third-party-summary":              Accesskeys; // Resumen de terceros
+            "third-party-facades":              Accesskeys; // Información de terceros
+        };
+    };
+}
 
+/*
 export interface ReportDetails {
     viewport:                           Viewport; // Información sobre el viewport
     "first-contentful-paint":           CumulativeLayoutShift; // Métrica de rendimiento
@@ -139,7 +314,7 @@ export interface ReportDetails {
     "structured-data":                  Accesskeys; // Accesibilidad
     "bf-cache":                         Accesskeys; // Accesibilidad
 }
-
+*/
 export interface Accesskeys {
     id:               string;           // Identificador único del acceso
     title:            string;           // Título del acceso
