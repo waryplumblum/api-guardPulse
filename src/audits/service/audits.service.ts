@@ -14,11 +14,12 @@ export class AuditsService {
   ) {}
 
   async auditUrl(url: string): Promise<any> {
-    // Lanzar Puppeteer en modo headless
-    const browser = await puppeteer.launch({
-      headless: 'shell', // Ejecuta Chrome sin interfaz gráfica
-      args: ['--no-sandbox', '--disable-setuid-sandbox'],
-    });
+    let browser;
+    try {
+      browser = await puppeteer.launch({
+        headless: 'shell', 
+        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+      });
 
     const { port } = new URL(browser.wsEndpoint());
 
@@ -31,8 +32,6 @@ export class AuditsService {
 
     const runnerResult = await lighthouse(url, options);
     const report = runnerResult.lhr;
-
-    await browser.close(); // Cierra el navegador Puppeteer
 
     const auditResult = {
       performance: report.categories.performance.score * 100,
@@ -241,7 +240,16 @@ export class AuditsService {
       auditResult,
       reportId: newReport._id.toString(), // Asegurarse de que el ID sea string
     };
+  } catch (error) {
+    console.error('Error during audit:', error);
+    throw new Error('Failed to complete audit');
+    
+  } finally {
+    if (browser) {
+      await browser.close(); // Cierra el navegador Puppeteer
+    }
   }
+}
 
   // Nuevo método para obtener todas las auditorías
   async getAllAudits(): Promise<Audit[]> {
