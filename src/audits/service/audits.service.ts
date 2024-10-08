@@ -241,8 +241,19 @@ export class AuditsService {
       reportId: newReport._id.toString(), // Asegurarse de que el ID sea string
     };
   } catch (error) {
-    console.error('Error during audit:', error);
-    throw new Error('Failed to complete audit');
+    if (error instanceof puppeteer.TimeoutError) {
+      console.error('Timeout error during browser launch:', error);
+      throw new Error('Puppeteer Timeout: Failed to launch browser');
+    } else if (error.message.includes('Lighthouse')) {
+      console.error('Error with Lighthouse audit:', error);
+      throw new Error('Lighthouse failed: Check if the URL is accessible');
+    } else if (error.message.includes('MongoError')) {
+      console.error('Database error:', error);
+      throw new Error('Database operation failed: Could not save audit');
+    } else {
+      console.error('Unknown error:', error);
+      throw new Error('Audit process failed unexpectedly');
+    }
     
   } finally {
     if (browser) {
